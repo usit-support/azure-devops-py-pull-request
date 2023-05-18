@@ -1,0 +1,59 @@
+{
+  "manifestVersion": 1,
+  "id": "OEC-CreatePullRequest",
+  "version": "1.0.0",
+  "name": "OEC-CreatePullRequest",
+  "description": "Automatically create a Pull Request for Azure DevOps from Build or Release pipeline, supports also multi target branch.",
+  "publisher": "OEC-CreatePullRequest",
+  "repository": {
+    "type": "git",
+    "url": "https://dev.azure.com/horiens-digital/pipelines/_git/extensions"
+  },
+  "content": {
+    "details": {
+      "path": "README.md"
+    },
+    "license": {
+      "path": "LICENSE.md"
+    },
+    "privacy": {
+      "path": "PRIVACY.md"
+    }
+  },
+  "links": {
+    "support": {
+      "uri": "https://dev.azure.com/horiens-digital/pipelines/_wiki/wikis"
+    },
+    "license": {
+      "uri": "https://dev.azure.com/horiens-digital/pipelines/_git/extensions?path=/LICENSE.md"
+    },
+    "privacypolicy": {
+      "uri": "https://dev.azure.com/horiens-digital/pipelines/_git/extensions?path=/PRIVACY.md"
+    }
+  },
+  "tags": ["Azure Pipelines", "Pull Request", "Git", "Azure Repos", "PR", "Python"],
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "icons": {
+    "default": "pull.png"
+  },
+  "categories": ["Azure Pipelines"],
+  "contributions": [
+    {
+      "id": "OEC-CreatePullRequest",
+      "type": "ms.vss-distributed-task.task",
+      "targets": ["ms.vss-distributed-task.tasks"],
+      "properties": {
+        "name": "task"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "task"
+    }
+  ]
+}

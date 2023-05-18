@@ -1,0 +1,87 @@
+stages:
+- stage: Build
+  displayName: 'Build vsix file'
+  variables:
+    version: $[ counter('revision-new',0) ]
+  jobs:
+    - job: Build
+      condition: true
+      displayName: Package the extension
+      pool: 
+        vmImage: 'windows-latest'
+      steps:
+      - task: TfxInstaller@4
+        inputs:
+          version: '0.x'
+          checkLatest: true
+        displayName: 'Use Node CLI for Azure DevOps (tfx-cli): 0.x'
+      - task: PackageAzureDevOpsExtension@4
+        displayName: 'Package Extension: $(Build.SourcesDirectory)'
+        name: 'packageStep'
+        inputs:
+          rootFolder: '$(Build.SourcesDirectory)'
+          outputPath: '$(Build.ArtifactStagingDirectory)\OEC-CreatePullRequest.OEC-CreatePullRequest-1.0.0.vsix'
+          publisherId: 'OEC-CreatePullRequest'
+          extensionId: 'OEC-CreatePullRequest'
+          extensionTag: '-build'
+          extensionName: 'OEC-CreatePullRequest'
+          extensionVersion: '1.0.$(version)'
+          updateTasksVersion: true
+          updateTasksVersionType: patch
+          extensionVisibility: private
+
+      - task: PowerShell@2
+        displayName: 'Increment the task version in task.json'
+        inputs:
+          targetType: 'inline'
+          script: |
+            $jsonPath = "$(Build.SourcesDirectory)/task/task.json"
+            $taskJson = Get-Content $jsonPath | ConvertFrom-Json
+            $taskJson.version.Patch = $(Version)
+            $taskJson = $taskJson | ConvertTo-Json -Depth 10
+            Set-Content -Path $jsonPath -Value $taskJson | ConvertTo-Json
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish vsix'
+        inputs:
+          publishLocation: pipeline
+          targetPath: '$(packageStep.Extension.OutputPath)'
+          artifact: 'vsix'
+        condition: succeededOrFailed()
+
+- stage: Publish_Private
+  displayName: Publish to private
+  dependsOn: Build
+  jobs:
+    - deployment: DeployPrivate
+      environment: Marketplace Private
+      displayName: Deploy the extension to private
+      pool:
+        vmImage: 'Windows-latest'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: TfxInstaller@4
+              displayName: 'Use Node CLI for Azure DevOps (tfx-cli): 0.x'
+              inputs:
+                version: '0.x'
+                checkLatest: true
+
+            - task: PowerShell@2
+              inputs:
+                targetType: 'inline'
+                script: |
+                  Get-ChildItem $(Build.ArtifactStagingDirectory)
+
+            - task: PublishAzureDevOpsExtension@4
+              name: 'publishPriv'
+              displayName: 'Publish Priv Extension'
+              inputs:
+                connectedServiceName: 'AzueDevOpsMarketplace'
+                fileType: vsix
+                vsixFile: '$(Pipeline.Workspace)/vsix/OEC-CreatePullRequest.OEC-CreatePullRequest-1.0.0.vsix'
+                updateTasksVersion: false
+                extensionVisibility: private
+                extensionPricing: free
+                shareWith: horiens-digital
