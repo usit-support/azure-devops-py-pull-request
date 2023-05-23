@@ -1,19 +1,18 @@
 {
-  "id": "2f159376-316b-4652-a49c-392f9d534113",
-  "name": "OEC-CreatePullRequest",
-  "friendlyName": "Create Pull Request",
-  "description": "Automatically create a Pull Request for Azure DevOps or GitHub repository from Build or Release pipeline, supports also multi target branch.",
-  "helpMarkDown": "[More Information](https://dev.azure.com/horiens-digital/pipelines/_git/extensions?path=/README.md)",
+  "id": "7294513b-59f2-4637-8130-f7c35c83c140",
+  "name": "USITSupport-CreatePullRequest",
+  "friendlyName": "USITSupport-Create Pull Request",
+  "description": "Automatically create a Pull Request for Azure DevOps repository from Build or Release pipeline, supports also multi target branch.",
+  "helpMarkDown": "[More Information](https://dev.azure.com/usitsupport/_git/py-pull-request/_git/extensions?path=/README.md)",
   "categories": "Utility",
   "visibility": ["Build", "Release"],
-  "runsOn": ["Agent", "DeploymentGroup"],
-  "author": "Romulo Conceicao",
+  "author": "usitsupport",
   "version": {
     "Major": 1,
     "Minor": 0,
     "Patch": 0
   },
-  "instanceNameFormat": "Create Pull Request",
+  "instanceNameFormat": "USITSupport - Create Pull Request",
   "groups": [
     {
       "name": "completion",
@@ -74,15 +73,6 @@
       "visibleRule": "repositorySelector = select"
     },
     {
-      "name": "isForked",
-      "type": "boolean",
-      "label": "Is Forked Repository",
-      "defaultValue": false,
-      "required": false,
-      "helpMarkDown": "If checked, it means the source branch it from a forked repository and not from the original. the target repo will be the currnet build repo.",
-      "visibleRule": "repositorySelector = select"
-    },
-    {
       "name": "sourceBranch",
       "type": "string",
       "label": "Source branch name",
@@ -94,7 +84,7 @@
       "name": "targetBranch",
       "type": "string",
       "label": "Target(s) branch name",
-      "defaultValue": "",
+      "defaultValue": "develop",
       "required": true,
       "helpMarkDown": "The target branch name (for example - master). Also supports multi target branch with * (for example: test/*)."
     },
@@ -102,8 +92,8 @@
       "name": "title",
       "type": "string",
       "label": "Title",
-      "defaultValue": "",
-      "required": true,
+      "defaultValue": "Auto-PR-$(Build.SourceBranch)-to-develop",
+      "required": false,
       "helpMarkDown": "The pull request title. You can use the token [BRANCH_NAME] to dynamically reuse the current target branch name in the pull request title (for example: Merge master into [BRANCH_NAME])."
     },
     {
@@ -117,7 +107,7 @@
     {
       "name": "reviewers",
       "type": "string",
-      "label": "Reviewers (Azure DevOps: email address or team name, GitHub: username)",
+      "label": "Reviewers (Azure DevOps: email address or team name)",
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The pull request reviewers (optional). <br> For Azure DevOps - one or more email address or team name separated by semicolon. for example: test@test.com;MyTeamName <br> To make the reviewer required add 'req:', for example: 'req:test@test.com' <br> For GitHub - one or more usernames separated by semicolon. for example: username1;username2"
@@ -136,7 +126,7 @@
       "label": "Create Draft Pull Request",
       "defaultValue": false,
       "required": false,
-      "helpMarkDown": "If checked, the pull request will be a Draft Pull Request. <br> For Azure DevOps: see [here](https://docs.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops#draft-pull-requests) more info. <br> For GitHub: see [here](https://github.blog/2019-02-14-introducing-draft-pull-requests/) more info."
+      "helpMarkDown": "If checked, the pull request will be a Draft Pull Request. <br> For Azure DevOps: see [here](https://docs.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops#draft-pull-requests) more info."
     },
     {
       "name": "linkWorkItems",
@@ -245,7 +235,7 @@
   "execution": {
     "Python": {
       "target": "pr.py",
-      "platforms": ["linux","windows"],
+      "platforms": ["linux"],
       "workingDirectory": "$(currentDirectory)"
     }
   }
