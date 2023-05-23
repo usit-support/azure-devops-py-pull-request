@@ -9,16 +9,16 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--sourceRefName", help="Provide the name of the source branch.", default="features/novidades")
+parser.add_argument("--sourceRefName", help="Provide the name of the source branch.", default="features/new")
 parser.add_argument("--targetRefName", help="Provide the name of the target branch.", default="develop")
-parser.add_argument("--repo", help="Provide the name of the repository.", default="portal-pj")
-parser.add_argument("--proj", help="Provide the name of the project.", default="portal-pj")
-parser.add_argument("--org", help="Provide the name of the organization.", default="horiens-digital")
+parser.add_argument("--repo", help="Provide the name of the repository.", default="usitsupport")
+parser.add_argument("--proj", help="Provide the name of the project.", default="usitsupport")
+parser.add_argument("--org", help="Provide the name of the organization.", default="usitsupport")
 
 parse_args = parser.parse_args()
 
 # Fill in with your personal access token and org URL
-personal_access_token = 'arpkcruugjx22rvoyvvp5sxt5mb7vsbwip7muiqwuo3o3iro2xna'
+personal_access_token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 organization_url = f'https://dev.azure.com/{parse_args.org}'
 
 # Create a connection to the org
