@@ -1,13 +1,13 @@
 {
   "manifestVersion": 1,
-  "id": "OEC-CreatePullRequest",
+  "id": "USITSupport-CreatePullRequest",
   "version": "1.0.0",
-  "name": "OEC-CreatePullRequest",
+  "name": "USITSupport-CreatePullRequest",
   "description": "Automatically create a Pull Request for Azure DevOps from Build or Release pipeline, supports also multi target branch.",
-  "publisher": "OEC-CreatePullRequest",
+  "publisher": "USITSupport-CreatePullRequest",
   "repository": {
     "type": "git",
-    "url": "https://dev.azure.com/horiens-digital/pipelines/_git/extensions"
+    "url": "https://dev.azure.com/usitsupport/pipelines/_git/extensions"
   },
   "content": {
     "details": {
@@ -22,13 +22,13 @@
   },
   "links": {
     "support": {
-      "uri": "https://dev.azure.com/horiens-digital/pipelines/_wiki/wikis"
+      "uri": "https://dev.azure.com/usitsupport/pipelines/_wiki/wikis"
     },
     "license": {
-      "uri": "https://dev.azure.com/horiens-digital/pipelines/_git/extensions?path=/LICENSE.md"
+      "uri": "https://dev.azure.com/usitsupport/pipelines/_git/extensions?path=/LICENSE.md"
     },
     "privacypolicy": {
-      "uri": "https://dev.azure.com/horiens-digital/pipelines/_git/extensions?path=/PRIVACY.md"
+      "uri": "https://dev.azure.com/usitsupport/pipelines/_git/extensions?path=/PRIVACY.md"
     }
   },
   "tags": ["Azure Pipelines", "Pull Request", "Git", "Azure Repos", "PR", "Python"],
@@ -43,7 +43,7 @@
   "categories": ["Azure Pipelines"],
   "contributions": [
     {
-      "id": "OEC-CreatePullRequest",
+      "id": "USITSupport-CreatePullRequest",
       "type": "ms.vss-distributed-task.task",
       "targets": ["ms.vss-distributed-task.tasks"],
       "properties": {
